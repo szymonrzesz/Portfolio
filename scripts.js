@@ -1,3 +1,37 @@
+// Theme Toggle Functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        const themeIcon = themeToggle.querySelector('i');
+
+        // Get saved theme from localStorage or default to 'dark'
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        body.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+
+        // Theme toggle event listener
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+            
+            // Add a subtle animation to the toggle button
+            themeToggle.style.transform = 'translateY(-50%) scale(0.9)';
+            setTimeout(() => {
+                themeToggle.style.transform = 'translateY(-50%) scale(1)';
+            }, 150);
+        });
+
+        function updateThemeIcon(theme) {
+            if (theme === 'dark') {
+                themeIcon.className = 'bi bi-sun-fill';
+            } else {
+                themeIcon.className = 'bi bi-moon-fill';
+            }
+        }
+
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -61,17 +95,7 @@
             });
         });
 
-
-        // Enhanced navigation scroll effect
-        window.addEventListener('scroll', () => {
-            const nav = document.querySelector('nav');
-            const scrolled = window.pageYOffset;
-            
-            if (scrolled > 100) {
-                nav.style.background = 'rgba(0, 29, 61, 0.98)';
-                nav.style.boxShadow = '0 8px 32px rgba(0, 29, 61, 0.4)';
-            } else {
-                nav.style.background = 'rgba(0, 29, 61, 0.95)';
-                nav.style.boxShadow = '0 8px 32px rgba(0, 29, 61, 0.3)';
-            }
+        // Add theme transition effect on load
+        document.addEventListener('DOMContentLoaded', () => {
+            body.style.transition = 'all 0.3s ease';
         });
